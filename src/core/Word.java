@@ -1,3 +1,5 @@
+package core;
+
 public class Word {
     private int id;
     private String content;
