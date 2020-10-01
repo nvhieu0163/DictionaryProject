@@ -366,43 +366,90 @@ public class SQLDatabase {
         }
     }
 
+    public List<Word> getWordStartWith(String prefix) {
+        List<Word> result = new ArrayList<>();
+
+        Statement stmt = null;
+        try {
+            stmt = database.createStatement();
+            ResultSet rs = stmt.executeQuery(String.format(
+                    "SELECT id, content, POSTag FROM WORD WHERE content LIKE '%s%%';",
+                    prefix
+            ));
+
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String content = rs.getString("content");
+                String POSTag = rs.getString("POSTag");
+
+                result.add(new Word(id, content, null, POSTag, null));
+            }
+            rs.close();
+            stmt.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        System.out.println("getWordStartWith " + prefix + " done successfully");
+
+        return result;
+    }
+
+    public void deleteWordByID(int wordID) {
+        Statement stmt = null;
+        try {
+            stmt = database.createStatement();
+            stmt.executeUpdate(String.format(
+                    "DELETE FROM WORD WHERE id = %d;", wordID
+            ));
+
+            stmt.close();
+            database.commit();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        System.out.println("deleteWordByID " + wordID + " done successfully");
+    }
+
     public static void main(String[] args) {
         SQLDatabase database = new SQLDatabase("test");
-        database.initDatabase();
-        Word w = new Word(
-                -1, "word 1", "pronunciation 1", "POSTag 1",
-                new Meaning(
-                        -1,
-                        List.of(
-                                new Explanation(
-                                        -1, "Explanation 1.1",
-                                        List.of(
-                                                new Pair<>("apple1", "Tao1"),
-                                                new Pair<>("apple2", "Tao12")
-                                        )
-                                ),
-                                new Explanation(
-                                        -1, "Explanation 1.2", null
-                                )
-                        ),
-                        List.of(
-                                new Pair<>("Phrase1", "Cum Tu 1"),
-                                new Pair<>("Phrase2", "Cum Tu 2")
-                        )
-                )
-        );
-        database.insertWord(w);
-        database.insertWord(w);
-        database.insertWord(w);
-        database.insertWord(w);
-        database.insertWord(w);
-        database.insertWord(w);
-        database.insertWord(w);
-        database.insertWord(w);
-        database.insertWord(w);
-        database.insertWord(w);
-        Word word = database.getWordByID(1);
-        System.out.println(word);
+//        database.initDatabase();
+//        Word w = new Word(
+//                -1, "word 1", "pronunciation 1", "POSTag 1",
+//                new Meaning(
+//                        -1,
+//                        List.of(
+//                                new Explanation(
+//                                        -1, "Explanation 1.1",
+//                                        List.of(
+//                                                new Pair<>("apple1", "Tao1"),
+//                                                new Pair<>("apple2", "Tao12")
+//                                        )
+//                                ),
+//                                new Explanation(
+//                                        -1, "Explanation 1.2", null
+//                                )
+//                        ),
+//                        List.of(
+//                                new Pair<>("Phrase1", "Cum Tu 1"),
+//                                new Pair<>("Phrase2", "Cum Tu 2")
+//                        )
+//                )
+//        );
+//        database.insertWord(w);
+//        database.insertWord(w);
+//        database.insertWord(w);
+//        database.insertWord(w);
+//        database.insertWord(w);
+//        database.insertWord(w);
+//        database.insertWord(w);
+//        database.insertWord(w);
+//        database.insertWord(w);
+//        database.insertWord(w);
+//        Word word = database.getWordByID();
+        List<Word> r = database.getWordStartWith("wo");
+//        database.deleteWordByID(5);
+//        r = database.getWordStartWith("wo");
+        System.out.println(r);
     }
 
 }
