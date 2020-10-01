@@ -52,7 +52,7 @@ public class SQLDatabase {
             stmt.executeUpdate(sqlDropMeaning);
             String sqlMeaning = "CREATE TABLE MEANING (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "wordID INT NOT NULL, " +
+                    "wordID INT NOT NULL" +
                     ");";
             stmt.executeUpdate(sqlMeaning);
 
@@ -61,7 +61,7 @@ public class SQLDatabase {
             String sqlPhrase = "CREATE TABLE PHRASE (" +
                     "meaningID INT NOT NULL, " +
                     "phrase TEXT NOT NULL, " +
-                    "translate TEXT NOT NULL, " +
+                    "translate TEXT NOT NULL" +
                     ");";
             stmt.executeUpdate(sqlPhrase);
 
@@ -70,7 +70,7 @@ public class SQLDatabase {
             String sqlExplanation = "CREATE TABLE EXPLANATION (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "meaningID INT NOT NULL, " +
-                    "explanation TEXT NOT NULL, " +
+                    "explanation TEXT NOT NULL" +
                     ");";
             stmt.executeUpdate(sqlExplanation);
 
@@ -79,7 +79,7 @@ public class SQLDatabase {
             String sqlExample = "CREATE TABLE EXAMPLE (" +
                     "explanationID INT NOT NULL, " +
                     "example TEXT NOT NULL, " +
-                    "translate TEXT NOT NULL, " +
+                    "translate TEXT NOT NULL" +
                     ");";
             stmt.executeUpdate(sqlExample);
 
