@@ -53,10 +53,6 @@ public class SQLDatabase {
             String sqlMeaning = "CREATE TABLE MEANING (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "wordID INT NOT NULL, " +
-                    "CONSTRAINT meaning_word " +
-                    "FOREIGN KEY (wordID) " +
-                    "REFERENCES WORD (id) " +
-                    "ON DELETE CASCADE" +
                     ");";
             stmt.executeUpdate(sqlMeaning);
 
@@ -66,10 +62,6 @@ public class SQLDatabase {
                     "meaningID INT NOT NULL, " +
                     "phrase TEXT NOT NULL, " +
                     "translate TEXT NOT NULL, " +
-                    "CONSTRAINT phrase_meaning " +
-                    "FOREIGN KEY (meaningID) " +
-                    "REFERENCES MEANING (id) " +
-                    "ON DELETE CASCADE" +
                     ");";
             stmt.executeUpdate(sqlPhrase);
 
@@ -79,10 +71,6 @@ public class SQLDatabase {
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "meaningID INT NOT NULL, " +
                     "explanation TEXT NOT NULL, " +
-                    "CONSTRAINT explanation_meaning " +
-                    "FOREIGN KEY (meaningID) " +
-                    "REFERENCES MEANING (id) " +
-                    "ON DELETE CASCADE" +
                     ");";
             stmt.executeUpdate(sqlExplanation);
 
@@ -92,10 +80,6 @@ public class SQLDatabase {
                     "explanationID INT NOT NULL, " +
                     "example TEXT NOT NULL, " +
                     "translate TEXT NOT NULL, " +
-                    "CONSTRAINT example_explanation " +
-                    "FOREIGN KEY (explanationID) " +
-                    "REFERENCES EXPLANATION (id) " +
-                    "ON DELETE CASCADE" +
                     ");";
             stmt.executeUpdate(sqlExample);
 
