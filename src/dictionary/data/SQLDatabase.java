@@ -1,8 +1,8 @@
-package data;
+package dictionary.data;
 
-import core.Explanation;
-import core.Meaning;
-import core.Word;
+import dictionary.core.Explanation;
+import dictionary.core.Meaning;
+import dictionary.core.Word;
 import javafx.util.Pair;
 
 import java.sql.Connection;

@@ -11906,7 +11906,7 @@
 @apple-cheese /'æpltʃi:z/
 *  danh từ
 - bã táo ép
-@apple-core /'æplkɔ:/
+@apple-dictionary.core /'æplkɔ:/
 *  danh từ
 - hạch táo, lõi táo
 @apple-dumpling /'æpl,dʌmpliɳ/
@@ -52755,17 +52755,17 @@ bargain-sale /'bɑ:ginseil/
 @cordwainer /'kɔ:dweinə/
 *  danh từ
 - (từ cổ,nghĩa cổ) thợ đóng giày
-@core /kɔ:/
+@dictionary.core /kɔ:/
 *  danh từ
 - lõi, hạch (quả táo, quả lê...)
 - điểm trung tâm, nòng cốt, hạt nhân
-=the core of a subject+ điểm trung tâm của một vấn đề, điểm chính của một vấn đề
-=the core of an organization+ nòng cốt của một tổ chức
+=the dictionary.core of a subject+ điểm trung tâm của một vấn đề, điểm chính của một vấn đề
+=the dictionary.core of an organization+ nòng cốt của một tổ chức
 - lõi dây thừng
 - (kỹ thuật) nòng, lõi, ruột
 - (nghĩa bóng) đáy lòng, thâm tâm, nơi thầm kín nhất
-=in my heart's core+ tận đáy lòng tôi
-=rotten to the core+ thối nát đến tận xương tuỷ
+=in my heart's dictionary.core+ tận đáy lòng tôi
+=rotten to the dictionary.core+ thối nát đến tận xương tuỷ
 *  ngoại động từ
 - lấy lõi ra, lấy nhân ra
 @coreopsis /,kɔri'ɔpsis/

@@ -6198,7 +6198,7 @@
 *  tính từ
 - hèn nhát
 - đê tiện, ném đá giấu tay
-@data /'deitə/
+@dictionary.data /'deitə/
 *  danh từ
 - số nhiều của datum
 - ((thường) dùng như số ít) số liệu, dữ kiện; tài liệu, cứ liệu (cung cấp những điều cần thiết)
@@ -6259,7 +6259,7 @@
 *  danh từ
 - (ngôn ngữ học) tặng cách
 @datum /'deitəm/
-*  danh từ,  số nhiều data
+*  danh từ,  số nhiều dictionary.data
 - số lượng đã cho (bài toán...); điều đã cho biết
 - luận cứ
 - (số nhiều datums) mốc tính toán, mốc đo lường

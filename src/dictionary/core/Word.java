@@ -1,4 +1,4 @@
-package core;
+package dictionary.core;
 
 public class Word {
     private int id;

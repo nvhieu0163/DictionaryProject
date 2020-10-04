@@ -1,6 +1,6 @@
-package core;
+package dictionary.core;
 
-import data.SQLDatabase;
+import dictionary.data.SQLDatabase;
 import javafx.util.Pair;
 
 import java.io.BufferedReader;
