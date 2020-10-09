@@ -1,8 +1,5 @@
-package dictionary.data;
+package dictionary;
 
-import dictionary.core.Explanation;
-import dictionary.core.Meaning;
-import dictionary.core.Word;
 import javafx.util.Pair;
 
 import java.sql.Connection;
@@ -43,8 +40,7 @@ public class SQLDatabase {
             String sqlWord = "CREATE TABLE WORD (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     "content VARCHAR(100) NOT NULL, " +
-                    "pronunciation VARCHAR(100) NULL, " +
-                    "POSTag INT NULL" +
+                    "pronunciation VARCHAR(100) NULL " +
                     ");";
             stmt.executeUpdate(sqlWord);
 
@@ -52,36 +48,12 @@ public class SQLDatabase {
             stmt.executeUpdate(sqlDropMeaning);
             String sqlMeaning = "CREATE TABLE MEANING (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "wordID INT NOT NULL" +
+                    "wordID INTEGER NOT NULL, " +
+                    "posTag VARCHAR(100) NULL, " +
+                    "explanations TEXT NULL, " +
+                    "phrases TEXT NULL" +
                     ");";
             stmt.executeUpdate(sqlMeaning);
-
-            String sqlDropPhrase = "DROP TABLE IF EXISTS PHRASE;";
-            stmt.executeUpdate(sqlDropPhrase);
-            String sqlPhrase = "CREATE TABLE PHRASE (" +
-                    "meaningID INT NOT NULL, " +
-                    "phrase TEXT NOT NULL, " +
-                    "translate TEXT NOT NULL" +
-                    ");";
-            stmt.executeUpdate(sqlPhrase);
-
-            String sqlDropExplanation = "DROP TABLE IF EXISTS EXPLANATION;";
-            stmt.executeUpdate(sqlDropExplanation);
-            String sqlExplanation = "CREATE TABLE EXPLANATION (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "meaningID INT NOT NULL, " +
-                    "explanation TEXT NOT NULL" +
-                    ");";
-            stmt.executeUpdate(sqlExplanation);
-
-            String sqlDropExample = "DROP TABLE IF EXISTS EXAMPLE";
-            stmt.executeUpdate(sqlDropExample);
-            String sqlExample = "CREATE TABLE EXAMPLE (" +
-                    "explanationID INT NOT NULL, " +
-                    "example TEXT NOT NULL, " +
-                    "translate TEXT NOT NULL" +
-                    ");";
-            stmt.executeUpdate(sqlExample);
 
             stmt.close();
             database.commit();
@@ -95,6 +67,8 @@ public class SQLDatabase {
         Statement stmt = null;
 
         try {
+            String sql = "INSERT INTO WORD (content, pronunciation) VALUES ('%s', '%s');";
+            database.prepareStatement(sql);
             stmt = database.createStatement();
 
             String sql = "INSERT INTO WORD (content, pronunciation, POSTag) " +
@@ -396,7 +370,7 @@ public class SQLDatabase {
 
     public static void main(String[] args) {
         SQLDatabase database = new SQLDatabase("test");
-//        database.initDatabase();
+        database.initDatabase();
 //        Word w = new Word(
 //                -1, "word 1", "pronunciation 1", "POSTag 1",
 //                new Meaning(
@@ -420,20 +394,11 @@ public class SQLDatabase {
 //                )
 //        );
 //        database.insertWord(w);
-//        database.insertWord(w);
-//        database.insertWord(w);
-//        database.insertWord(w);
-//        database.insertWord(w);
-//        database.insertWord(w);
-//        database.insertWord(w);
-//        database.insertWord(w);
-//        database.insertWord(w);
-//        database.insertWord(w);
 //        Word word = database.getWordByID();
-        List<Word> r = database.getWordStartWith("wo");
+//        List<Word> r = database.getWordStartWith("wo");
 //        database.deleteWordByID(5);
 //        r = database.getWordStartWith("wo");
-        System.out.println(r);
+//        System.out.println(r);
     }
 
 }

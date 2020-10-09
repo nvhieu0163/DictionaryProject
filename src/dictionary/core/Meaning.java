@@ -1,20 +1,18 @@
-package dictionary.core;
-
-import javafx.util.Pair;
-
-import java.util.List;
+package dictionary;
 
 public class Meaning {
     private int id;
-    private List<Explanation> explanation;
-    private List<Pair<String, String>> phrases;
+    private String posTag;
+    private String explanations;
+    private String phrases;
 
     public Meaning() {
     }
 
-    public Meaning(int id, List<Explanation> explanation, List<Pair<String, String>> phrases) {
+    public Meaning(int id, String posTag, String explanations, String phrases) {
         this.id = id;
-        this.explanation = explanation;
+        this.posTag = posTag;
+        this.explanations = explanations;
         this.phrases = phrases;
     }
 
@@ -26,19 +24,34 @@ public class Meaning {
         this.id = id;
     }
 
-    public List<Explanation> getExplanation() {
-        return explanation;
+    public String getPosTag() {
+        return posTag;
     }
 
-    public void setExplanation(List<Explanation> explanation) {
-        this.explanation = explanation;
+    public void setPosTag(String posTag) {
+        this.posTag = posTag;
     }
 
-    public List<Pair<String, String>> getPhrases() {
+    public String getExplanations() {
+        return explanations;
+    }
+
+    public void setExplanations(String explanations) {
+        this.explanations = explanations;
+    }
+
+    public String getPhrases() {
         return phrases;
     }
 
-    public void setPhrases(List<Pair<String, String>> phrases) {
+    public void setPhrases(String phrases) {
         this.phrases = phrases;
+    }
+
+    @Override
+    public String toString() {
+        return "Meaning{" +
+                "posTag='" + posTag + '\'' +
+                '}';
     }
 }

@@ -1,30 +1,22 @@
-package dictionary.core;
+package dictionary;
+
+import java.util.List;
 
 public class Word {
     private int id;
     private String content;
     private String pronunciation;
-    private String posTag;
 
-    private Meaning meaning;
+    private List<Meaning> meanings;
 
     public Word() {
     }
 
-    public Word(String content, String pronunciation, String posTag) {
-        this.id = -1;
-        this.content = content;
-        this.pronunciation = pronunciation;
-        this.posTag = posTag;
-        this.meaning = null;
-    }
-
-    public Word(int id, String content, String pronunciation, String posTag, Meaning meaning) {
+    public Word(int id, String content, String pronunciation, List<Meaning> meanings) {
         this.id = id;
         this.content = content;
         this.pronunciation = pronunciation;
-        this.posTag = posTag;
-        this.meaning = meaning;
+        this.meanings = meanings;
     }
 
     public int getId() {
@@ -51,19 +43,20 @@ public class Word {
         this.pronunciation = pronunciation;
     }
 
-    public String getPosTag() {
-        return posTag;
+    public List<Meaning> getMeanings() {
+        return meanings;
     }
 
-    public void setPosTag(String posTag) {
-        this.posTag = posTag;
+    public void setMeanings(List<Meaning> meanings) {
+        this.meanings = meanings;
     }
 
-    public Meaning getMeaning() {
-        return meaning;
-    }
-
-    public void setMeaning(Meaning meaning) {
-        this.meaning = meaning;
+    @Override
+    public String toString() {
+        return "Word{" +
+                "content='" + content + '\'' +
+                ", pronunciation='" + pronunciation + '\'' +
+                ", meanings=" + meanings +
+                '}';
     }
 }
