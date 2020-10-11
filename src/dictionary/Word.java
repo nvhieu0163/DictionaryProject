@@ -51,6 +51,19 @@ public class Word {
         this.meanings = meanings;
     }
 
+    public Meaning getMeaningByPOSTag(String posTag) {
+        for (Meaning meaning : meanings) {
+            if (meaning.getPosTag() != null) {
+                if (meaning.getPosTag().equals(posTag)) {
+                    return meaning;
+                }
+            } else if (posTag.equals("")) {
+                return meaning;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         return "Word{" +
