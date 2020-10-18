@@ -28,6 +28,25 @@ public class SearchResultController {
     }
 
     public void showWordDetail(MouseEvent mouseEvent) {
+        Scene home = ((Node) mouseEvent.getSource()).getScene();
 
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("wordDetail.fxml"));
+        try {
+            Parent wordDetail = loader.load();
+            Scene scene = new Scene(wordDetail);
+
+            //access the controller and call a method
+            WordDetailController controller = loader.getController();
+            controller.setData(id, posTag.getText(), home);
+
+            //This line gets the Stage information
+            Stage window = (Stage)home.getWindow();
+
+            window.setScene(scene);
+            window.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

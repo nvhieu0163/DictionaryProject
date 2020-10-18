@@ -1,9 +1,11 @@
 package gui;
 
 import dictionary.Dictionary;
+import dictionary.DictionaryManager;
 import dictionary.Word;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -13,6 +15,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.IOException;
@@ -22,7 +25,7 @@ import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
     public ScrollPane resultPane;
-    Dictionary dict = new Dictionary();
+    DictionaryManager dict = new DictionaryManager();
     public TextField searchBox;
     private String searchText = "";
 
