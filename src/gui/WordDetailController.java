@@ -1,5 +1,6 @@
 package gui;
 
+import dictionary.Dictionary;
 import dictionary.DictionaryManager;
 import dictionary.Meaning;
 import dictionary.Word;
@@ -13,10 +14,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
 import java.io.IOException;
-import java.util.List;
 
 public class WordDetailController {
     public VBox meaning;
@@ -25,7 +24,7 @@ public class WordDetailController {
     private Scene prevScene = null;
     private Word word = null;
     private String posTag = null;
-    DictionaryManager dict = new DictionaryManager();
+    Dictionary dict = DictionaryManager.getDictionary();
 
     public void actionQuit(ActionEvent actionEvent) {
         Alert alert = new Alert(
