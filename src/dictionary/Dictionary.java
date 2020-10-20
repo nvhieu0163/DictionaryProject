@@ -12,22 +12,15 @@ import java.util.List;
 public class Dictionary {
     private final SQLDatabase database;
 
-    public Dictionary() {
+    Dictionary() {
         database = new SQLDatabase("test");
     }
 
-    public Dictionary(boolean initDatabase) {
-        database = new SQLDatabase("test");
-        if (initDatabase) {
-            database.initDatabase();
-        }
-    }
-
-    public Dictionary(String databaseName) {
+    Dictionary(String databaseName) {
         database = new SQLDatabase(databaseName);
     }
 
-    public Dictionary(String databaseName, boolean initDatabase) {
+    Dictionary(String databaseName, boolean initDatabase) {
         database = new SQLDatabase(databaseName);
         if (initDatabase) {
             database.initDatabase();
@@ -38,15 +31,19 @@ public class Dictionary {
         return database.getWordByID(wordId);
     }
 
-    public void insertWord(Word word) {
-        database.insertWord(word);
+    public boolean insertWord(Word word) {
+        return database.insertWord(word);
     }
 
-    public void insertWords(List<Word> words) {
-        words.forEach(database::insertWord);
-//        for (Word word: words) {
-//            database.insertWord(word);
-//        }
+    public int insertWords(List<Word> words) {
+//        words.forEach(database::insertWord);
+        int count = 0;
+        for (Word word: words) {
+            if (database.insertWord(word)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     public List<Pair<Word, String>> getWordStartWith(String prefix) {
@@ -105,7 +102,7 @@ public class Dictionary {
         }
     }
 
-    public List<Word> loadWordFromFile(File inputFile) {
+    private List<Word> loadWordFromFile(File inputFile) {
         String content = getAllString(inputFile);
 
         List<Word> results = new ArrayList<>();
@@ -146,12 +143,16 @@ public class Dictionary {
         return results;
     }
 
+    public int loadFileIntoDatabase(File inputFile) {
+        List<Word> words = loadWordFromFile(inputFile);
+        return insertWords(words);
+    }
+
     public static void main(String[] args) {
         File f = new File("input/anhviet109K.txt");
         Dictionary dict = new Dictionary("test");
 
         List<Word> words = dict.loadWordFromFile(f);
         dict.insertWords(words);
-//        System.out.println(words);
     }
 }

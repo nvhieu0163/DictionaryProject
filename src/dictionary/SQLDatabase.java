@@ -48,7 +48,7 @@ public class SQLDatabase {
                     "wordID INTEGER NOT NULL, " +
                     "posTag VARCHAR(100) NULL, " +
                     "explanations TEXT NULL, " +
-                    "phrases TEXT NULL" +
+                    "phrases TEXT NULL " +
                     ");";
             stmt.executeUpdate(sqlMeaning);
 
@@ -148,7 +148,7 @@ public class SQLDatabase {
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                word.setId(wordID);
+                word.setId(rs.getInt("id"));
                 word.setContent(rs.getString("content"));
                 word.setPronunciation(rs.getString("pronunciation"));
 
@@ -198,7 +198,7 @@ public class SQLDatabase {
             String sqlQuery = "SELECT W.id, content, POSTag " +
                     "FROM WORD W JOIN MEANING M on W.id = M.wordID " +
                     "WHERE content LIKE ? " +
-                    "LIMIT 100;";
+                    "LIMIT 1000;";
             PreparedStatement stmt = database.prepareStatement(sqlQuery);
             stmt.setString(1, prefix + "%");
 
@@ -241,7 +241,7 @@ public class SQLDatabase {
     }
 
     public static void main(String[] args) {
-        SQLDatabase database = new SQLDatabase("test");
+        SQLDatabase database = new SQLDatabase("test2");
         database.initDatabase();
 //        Word w = new Word(
 //                -1, "curling", "/'kə:liɳ/",

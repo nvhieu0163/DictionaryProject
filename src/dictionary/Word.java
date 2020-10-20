@@ -57,7 +57,7 @@ public class Word {
                 if (meaning.getPosTag().equals(posTag)) {
                     return meaning;
                 }
-            } else if (posTag.equals("")) {
+            } else if (posTag == null || posTag.equals("")) {
                 return meaning;
             }
         }
