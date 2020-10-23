@@ -4,60 +4,62 @@ import dictionary.Dictionary;
 import dictionary.DictionaryManager;
 import dictionary.Meaning;
 import dictionary.Word;
-import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
-import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
-public class WordDetailController {
-    public VBox meaning;
-    public Text wordContent;
-    public Text pronunciation;
-    private Scene prevScene = null;
-    private Word word = null;
-    private String posTag = null;
+public class WordDetailController implements Initializable {
+    @FXML
+    private ListView<Pair<String, Integer>> wordDetail;
+
     Dictionary dict = DictionaryManager.getDictionary();
 
-    public void actionQuit(ActionEvent actionEvent) {
-        Alert alert = new Alert(
-                Alert.AlertType.CONFIRMATION,
-                "Are you sure you want to quit?",
-                ButtonType.YES, ButtonType.NO
-        );
-        alert.setTitle("Confirmation!");
-        alert.setHeaderText(null);
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.YES) {
-//                ((Stage)((Node)actionEvent.getSource()).getScene().getWindow()).close();
-                Platform.exit();
-            }
-        });
+    private Scene prevScene = null;
+    private HomeController homeController = null;
+    private Word word = null;
+    private String posTag = null;
+    private final ObservableList<Pair<String, Integer>> meaningObservableList = FXCollections.observableArrayList();
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        wordDetail.setItems(meaningObservableList);
+        wordDetail.setCellFactory(meaningListView -> new MeaningListCell());
     }
 
-    public void setData(int id, String posTag, Scene prevScene) {
-        this.word = dict.getWordByID(id);
+    public void setData(Word w, String posTag, Scene prevScene, HomeController controller) {
+        this.word = w;
         this.posTag = posTag;
         this.prevScene = prevScene;
+        this.homeController = controller;
 
         show();
     }
 
     private void show() {
-        wordContent.setText(word.getContent());
-        pronunciation.setText(word.getPronunciation());
+        meaningObservableList.setAll(List.of(
+                new Pair<>(word.getContent(), MeaningController.TYPE_CONTENT),
+                new Pair<>(word.getPronunciation(), MeaningController.TYPE_PRONUNCIATION)
+        ));
 
         Meaning wordMeaning = word.getMeaningByPOSTag(posTag);
         if (wordMeaning != null) {
             if (wordMeaning.getPosTag() != null && !wordMeaning.getPosTag().equals("")) {
-                pushLine(wordMeaning.getPosTag(), "meaningPOSTag.fxml");
+                meaningObservableList.add(
+                        new Pair<>(wordMeaning.getPosTag(), MeaningController.TYPE_POS_TAG)
+                );
             }
             if (wordMeaning.getExplanations() != null) {
                 for (String line : wordMeaning.getExplanations().split("\n")) {
@@ -76,32 +78,20 @@ public class WordDetailController {
         switch (line.charAt(0)) {
             case '-' -> {
                 if (phrase) {
-                    pushLine(line.substring(2), "meaningPhraseExplanation.fxml");
+                    meaningObservableList.add(new Pair<>(line.substring(2), MeaningController.TYPE_PHRASE_EXPLANATION));
                 } else {
-                    pushLine(line.substring(2), "meaningExplanation.fxml");
+                    meaningObservableList.add(new Pair<>(line.substring(2), MeaningController.TYPE_EXPLANATION));
                 }
             }
             case '=' -> {
                 String[] parts = line.substring(1).split("\\+ ");
-                pushLine(parts[0], "meaningExample.fxml");
-                pushLine(parts[1], "meaningTranslate.fxml");
+                meaningObservableList.addAll(List.of(
+                        new Pair<>(parts[0], MeaningController.TYPE_EXAMPLE),
+                        new Pair<>(parts[1], MeaningController.TYPE_TRANSLATE)
+                ));
             }
-            case '!' -> pushLine(line.substring(1), "meaningPhrase.fxml");
-            default -> pushLine(line, "meaningLine.fxml");
-        }
-    }
-
-    private void pushLine(String content, String url) {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource(url));
-        try {
-            Node meaningLine = loader.load();
-            MeaningController controller = loader.getController();
-            controller.setData(content);
-
-            meaning.getChildren().add(meaningLine);
-        } catch (IOException e) {
-            e.printStackTrace();
+            case '!' -> meaningObservableList.add(new Pair<>(line.substring(1), MeaningController.TYPE_PHRASE));
+            default -> meaningObservableList.add(new Pair<>(line, MeaningController.TYPE_LINE));
         }
     }
 
@@ -110,6 +100,22 @@ public class WordDetailController {
     }
 
     public void actionDelete(ActionEvent actionEvent) {
+        Alert alert = new Alert(
+                Alert.AlertType.CONFIRMATION,
+                "Are you sure you want to delete this word?",
+                ButtonType.YES, ButtonType.NO
+        );
+        alert.setTitle("Confirmation!");
+        alert.setHeaderText(null);
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+//                ((Stage)((Node)actionEvent.getSource()).getScene().getWindow()).close();
+                dict.deleteWordByID(word.getId());
+                homeController.removeWordResultById(word.getId());
+
+                actionHome(actionEvent);
+            }
+        });
 
     }
 
@@ -118,9 +124,9 @@ public class WordDetailController {
     }
 
     public void actionHome(ActionEvent actionEvent) {
-        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 
         window.setScene(prevScene);
-        window.show();
+//        window.show();
     }
 }

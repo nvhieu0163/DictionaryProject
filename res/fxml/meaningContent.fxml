@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox fx:id="meaningBox" prefWidth="340.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Text fx:id="content" strokeType="OUTSIDE" strokeWidth="0.0" text="word content">
+            <font>
+                <Font name="System Bold" size="28.0"/>
+            </font>
+            <VBox.margin>
+                <Insets top="10.0"/>
+            </VBox.margin>
+        </Text>
+    </children>
+</HBox>
