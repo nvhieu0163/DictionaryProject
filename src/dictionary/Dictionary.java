@@ -148,9 +148,13 @@ public class Dictionary {
         return insertWords(words);
     }
 
+    public boolean editPronunciationByID( int wordID, String pronunEdited) {
+        return database.editPronunciationByID(wordID, pronunEdited);
+    }
+
     public static void main(String[] args) {
-        File f = new File("input/anhviet109K.txt");
-        Dictionary dict = new Dictionary("test");
+        File f = new File("input/anhviet0-100.txt");
+        Dictionary dict = new Dictionary("test3", true);
 
         List<Word> words = dict.loadWordFromFile(f);
         dict.insertWords(words);

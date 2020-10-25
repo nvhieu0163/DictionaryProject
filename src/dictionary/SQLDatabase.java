@@ -60,6 +60,25 @@ public class SQLDatabase {
         System.out.println("Database created successfully");
     }
 
+    public void deleteAllTableDatabase() {
+        Statement stmt = null;
+        try {
+            stmt = database.createStatement();
+
+            String sqlDropMeaning = "DROP TABLE IF EXISTS MEANING;";
+            stmt.executeUpdate(sqlDropMeaning);
+
+            String sqlDropWord = "DROP TABLE IF EXISTS WORD;";
+            stmt.executeUpdate(sqlDropWord);
+
+            stmt.close();
+            database.commit();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        System.out.println("Delete all tables successfully");
+    }
+
     public boolean checkWordExisted(String word) {
         boolean existed = false;
         try {
@@ -240,9 +259,29 @@ public class SQLDatabase {
         // System.out.println("deleteWordByID " + wordID + " done successfully");
     }
 
-    public static void main(String[] args) {
-        SQLDatabase database = new SQLDatabase("test2");
-        database.initDatabase();
+    public boolean editPronunciationByID(int wordID, String pronunciationEdited) {
+        Word newWord = new Word();
+        try {
+            String sqlQuery = "UPDATE WORD SET pronunciation = ? WHERE id = ?;";
+            PreparedStatement stmt = database.prepareStatement(sqlQuery);
+            stmt.setInt(2, wordID);
+            stmt.setString(1, pronunciationEdited);
+
+            stmt.executeUpdate();
+            stmt.close();
+            database.commit();
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        }
+        return false;
+    }
+
+//    public static void main(String[] args) {
+//      SQLDatabase database = new SQLDatabase("test2");
+//        database.initDatabase();
+//        database.deleteAllTableDatabase();
+//
 //        Word w = new Word(
 //                -1, "curling", "/'kə:liɳ/",
 //                List.of(
@@ -266,7 +305,6 @@ public class SQLDatabase {
 //        System.out.println(word);
 //        List<Pair<Word, String>> r2 = database.getWordStartWith("cu");
 //        System.out.println(r2);
-//        database.deleteWordByID(1);
-    }
-
+//      database.deleteWordByID(10002);
+//    }
 }
